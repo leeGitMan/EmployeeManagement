@@ -389,7 +389,7 @@ public class EmployeeDAO {
 					+ "FROM EMPLOYEE\r\n"
 					+ "LEFT JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID)\r\n"
 					+ "JOIN JOB USING(JOB_CODE)\r\n"
-					+ "WHERE DEPT_CODE = ?";
+					+ "WHERE DEPT_TITLE = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			
@@ -405,7 +405,9 @@ public class EmployeeDAO {
 				String phone = rs.getString("PHONE");
 				String jobName = rs.getString("JOB_NAME");
 				int salary = rs.getInt("SALARY");
-				emp = new Employee(empId, empName, empNo, email, phone, deptTitle, jobName, salary);
+				Employee emp = new Employee(empId, empName, empNo, email, phone, departmentTitle, jobName, salary);
+				
+				empList.add(emp);
 			}
 			
 			
