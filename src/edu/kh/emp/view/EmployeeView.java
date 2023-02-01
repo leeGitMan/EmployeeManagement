@@ -333,6 +333,20 @@ public class EmployeeView {
 	 */
 	public void selectSalaryEmp() {
 		
+		System.out.println("<입력 받은 급여 이상을 받는 모든 사원 정보 조회>");
+		
+		System.out.print("급여 입력 : ");
+		int salary = sc.nextInt();
+		sc.nextLine();
+		
+		Employee emp = dao.selectSalary(salary);
+		
+		printOne(emp);
+		
+		
+		
+		
+		
 	}
 	
 	/**
