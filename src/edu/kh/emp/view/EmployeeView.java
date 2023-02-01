@@ -326,12 +326,6 @@ public class EmployeeView {
 		List<Employee> empList = dao.selectDeptEmp(departmentTitle);
 		
 		printAll(empList);
-		
-		
-		
-		
-		
-		
 	}
 	
 	/**
