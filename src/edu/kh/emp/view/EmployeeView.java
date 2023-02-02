@@ -1,8 +1,10 @@
 package edu.kh.emp.view;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
+import java.util.Map;
 
 import edu.kh.emp.model.dao.EmployeeDAO;
 //import edu.kh.emp.model.dao.EmployeeDAO;
@@ -16,8 +18,6 @@ public class EmployeeView {
 	
 	// DAO 객체 생성
 	private EmployeeDAO dao = new EmployeeDAO();
-	
-	
 	
 	// 메인 메뉴
 	public void displayMenu() {
@@ -103,7 +103,6 @@ public class EmployeeView {
 		List<Employee> empList = dao.selectAll();
 		
 		printAll(empList);
-		
 	}
 	
 	
@@ -122,9 +121,7 @@ public class EmployeeView {
 						emp.getEmpId(), emp.getEmpName(), emp.getEmpNo(), emp.getEmail(), 
 						emp.getPhone(), emp.getDepartmentTitle(), emp.getJobName(), emp.getSalary());
 			}
-
 		}
-		return;
 	}
 	
 	
@@ -133,6 +130,14 @@ public class EmployeeView {
 	 */
 	public void selectEmpId() {
 		
+		System.out.println("사번이 일치하는 사원 정보 조회");
+		System.out.println();
+		System.out.println();
+		
+		int empId = inputEmpId();
+		
+		Employee emp = dao.selectEmpId(empId);
+		printOne(emp);
 	}
 	
 	
@@ -306,9 +311,6 @@ public class EmployeeView {
 		}else {
 			System.out.println("취소 되었습니다.");
 		}
-		
-		
-		
 	}
 	
 	
@@ -326,6 +328,9 @@ public class EmployeeView {
 		List<Employee> empList = dao.selectDeptEmp(departmentTitle);
 		
 		printAll(empList);
+		
+		// printAll(dao.selectDeptEmp(departmentTitle));
+		// 이거도 가능
 	}
 	
 	/**
@@ -337,16 +342,11 @@ public class EmployeeView {
 		
 		System.out.print("급여 입력 : ");
 		int salary = sc.nextInt();
-		sc.nextLine();
-		
-		Employee emp = dao.selectSalary(salary);
-		
-		printOne(emp);
 		
 		
+		List<Employee>empList = dao.selectSalary(salary);
 		
-		
-		
+		printAll(empList);
 	}
 	
 	/**
@@ -354,6 +354,23 @@ public class EmployeeView {
 	 */
 	public void selectDeptTotalSalary() {
 		
+		System.out.println("|   부서   |     총 급여     |");
+		
+		
+		
+		for(String key :  dao.selectDeptTotalSalary().keySet()) {
+			int val = dao.selectDeptTotalSalary().get(key);
+			System.out.println("|    "+key +"    |     "+ val + "     |");
+			
+		}
+		
+//		Map<String, Integer> map = dao.selectDeptTotalSalary();
+//		
+//		for(String key : map.keySet()) {
+//			Object value = map.get(key);
+//			System.out.println(key + " : " + value + "원");
+//			
+//		}
 	}
 	
 	/**
@@ -361,9 +378,20 @@ public class EmployeeView {
 	 */
 	public void selectJobAvgSalary() {
 		
+//		System.out.println("|   직급   |     평균 급여     |");
+//		
+//		for(String key :  dao.selectJobAvgSalary().keySet()) {
+//			double val = dao.selectJobAvgSalary().get(key);
+//			System.out.println("|    "+key +"    |     "+ val + "     |");
+//		}
 		
+		Map<String, Double> map = dao.selectJobAvgSalary();
+		
+		for(String key : map.keySet()) {
+			Object values = map.get(key);
+			System.out.println(key + " : " + values + "원" );
+		}
 	}
-	
-	
-	
 }
+
+
